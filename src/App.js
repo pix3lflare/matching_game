@@ -6,7 +6,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <MatchingGame rowCount={5} columnCount={6} />
+        <MatchingGame rowCount={4} columnCount={4} />
       </div>
     );
   }

@@ -6,7 +6,7 @@ class GridItem extends React.Component {
     return (
       <div
         className={
-          selectedItems.indexOf(item.id) >= 0
+          selectedItems.indexOf(item.id) >= 0 || item.matched
             ? 'grid-item flipped'
             : 'grid-item'
         }
