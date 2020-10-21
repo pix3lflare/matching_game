@@ -1,5 +1,4 @@
 .matching-game {
-  position: relative;
   background: #eee;
   width: 800px;
   margin: auto;
@@ -60,3 +59,45 @@
     }
   }
 }
+
+.modal-screen{
+    position: absolute;
+    background: rgba(0,0,0,0.6);
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .modal{
+        position: relative;
+        background: #fff;
+        width: 300px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        flex-direction: column;
+
+        .title{
+            position: relative;
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        .button{
+            position: relative;
+            background: #00cdff;
+            width: 200px;
+            line-height: 60px;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 23px;
+        }
+    }
+}
+
+
