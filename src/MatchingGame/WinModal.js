@@ -6,7 +6,7 @@ export default class WinModal extends React.Component{
             <div className='modal-screen'>
                 <div className='modal'>
                     <div className='title'>You Won Game</div>
-                    <div className='button'>Play Again?</div>
+                    <div className='button' onClick={this.props.startNewGame}>Play Again?</div>
                 </div>
             </div>
         )

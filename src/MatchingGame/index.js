@@ -13,31 +13,17 @@ class MatchingGame extends React.Component {
   state = {
     valueArray: [],
     selectedItems: [],
-    timeRemaining: 10,
+    timeRemaining: 60,
     showStartModal: true,
     showWinModal: false,
     showLoseModal: false,
+    gameRunning: false,
   };
 
-  endGame = () => {
-    console.log(`end game`);
-  };
+  startNewGame = () => {
+    console.log('Start New Game')
 
-  componentDidMount() {
-    this.assignValue();
-    console.log(this.state);
-    this.timerInterval = setInterval(() => {
-      let timeRemaining = this.state.timeRemaining - 1;
-      if (timeRemaining >= 0) {
-        this.setState({ timeRemaining });
-        if (timeRemaining == 0) {
-          this.endGame();
-        }
-      }
-    }, 1000);
-  }
-
-  assignValue = () => {
+    // Initialize Grid Values
     const { rowCount, columnCount } = this.props;
     const num = (rowCount * columnCount) / 2;
     const valueArray = [];
@@ -66,8 +52,39 @@ class MatchingGame extends React.Component {
     valueArray.sort(function (a, b) {
       return 0.5 - Math.random();
     });
-    this.setState({ valueArray });
+
+    // Set Initial State and then begin Timer Countdown
+    this.setState({
+        valueArray,
+        selectedItems: [],
+        timeRemaining: 60,
+        showStartModal: false,
+        showWinModal: false,
+        showLoseModal: false,
+        gameRunning: true,
+     }, () => {
+            // Begin Count Down
+            this.timerInterval = setInterval(() => {
+              let timeRemaining = this.state.timeRemaining - 1;
+              if(timeRemaining >= 0 && this.state.gameRunning) {
+                this.setState({ timeRemaining });
+                if (timeRemaining == 0) {
+                  clearInterval(this.timerInterval)
+                  this.gameLost();
+                }
+              }
+            }, 1000);
+     });
+  }
+
+  gameLost = () => {
+      console.log('Game Lost');
+      this.setState({
+        gameRunning: false,
+        showLoseModal: true,
+      })
   };
+
   selectItem = item => {
     const selectedItems = this.state.selectedItems.concat(item.id);
     const items = this.state.valueArray.filter(
@@ -84,7 +101,15 @@ class MatchingGame extends React.Component {
           return i;
         });
 
-        this.setState({ valueArray });
+        let totalMatches = valueArray.filter((i)=>i.matched==true)
+
+        if( valueArray.length == totalMatches.length ){
+            console.log('All Matches Found')
+            this.setState({valueArray, gameRunning: false, showWinModal: true});
+        }else{
+            this.setState({valueArray});
+        }
+
       } else {
         console.log('Not a Match');
       }
@@ -107,9 +132,9 @@ class MatchingGame extends React.Component {
       <div className="matching-game">
 
         {/* Modals */}
-        {showStartModal && <StartModal/>}
-        {showWinModal && <WinModal/>}
-        {showLoseModal && <LoseModal/>}
+        {showStartModal && <StartModal startNewGame={this.startNewGame}/>}
+        {showWinModal && <WinModal  startNewGame={this.startNewGame}/>}
+        {showLoseModal && <LoseModal  startNewGame={this.startNewGame}/>}
 
         {/* Game */}
         <div className="header">
@@ -117,7 +142,6 @@ class MatchingGame extends React.Component {
           <div className="name">Matching Game</div>
           <Score
             valueArray={this.state.valueArray}
-            assignValue={this.assignValue}
           />
         </div>
         <div className="grid-wrap">
