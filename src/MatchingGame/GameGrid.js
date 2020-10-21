@@ -47,7 +47,14 @@ class GameGrid extends React.Component{
         if( items.length == 2 ){
             if( items[0].value == items[1].value ){
                 console.log('Found a Match')
+                const valueArray = this.state.valueArray.map((i)=>{
+                    if( i.id==items[0].id || i.id==items[1].id ){
+                        return Object.assign({}, i, { matched: true })
+                    }
+                    return i
+                })
 
+                this.setState({valueArray})
             }else{
                 console.log('Not a Match')
             }
@@ -55,7 +62,7 @@ class GameGrid extends React.Component{
             setTimeout(()=>{
                 console.log('Clear Selected Items')
                 this.setState({selectedItems: []})
-            }, 2000)
+            }, 500)
 
         }
 

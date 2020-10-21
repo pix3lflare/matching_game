@@ -6,7 +6,7 @@ class GridItem extends React.Component{
       const {item, selectItem, selectedItems} = this.props
       return (
           <div
-              className={selectedItems.indexOf(item.id) >= 0 ? 'grid-item flipped' : 'grid-item'}
+              className={selectedItems.indexOf(item.id) >= 0 || item.matched ? 'grid-item flipped' : 'grid-item'}
               onClick={()=>selectItem(item)}>
               <div className='value'>{item.value}</div>
           </div>
