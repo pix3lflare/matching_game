@@ -9,7 +9,7 @@ class MatchingGame extends React.Component {
   state = {
     valueArray: [],
     selectedItems: [],
-    timeRemaining: 10,
+    timeRemaining: 60,
   };
 
   endGame = () => {
@@ -18,7 +18,6 @@ class MatchingGame extends React.Component {
 
   componentDidMount() {
     this.assignValue();
-    console.log(this.state);
     this.timerInterval = setInterval(() => {
       let timeRemaining = this.state.timeRemaining - 1;
       if (timeRemaining >= 0) {
