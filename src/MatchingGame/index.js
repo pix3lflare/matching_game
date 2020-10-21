@@ -12,6 +12,9 @@ class MatchingGame extends React.Component {
   };
 
   componentDidMount() {
+    this.assignValue()
+  }
+  assignValue = () =>{
     const { rowCount, columnCount } = this.props;
     const num = (rowCount * columnCount) / 2;
     const valueArray = [];
@@ -42,7 +45,6 @@ class MatchingGame extends React.Component {
     });
     this.setState({ valueArray });
   }
-
   selectItem = (item) => {
     const selectedItems = this.state.selectedItems.concat(item.id);
     const items = this.state.valueArray.filter(
@@ -82,7 +84,7 @@ class MatchingGame extends React.Component {
         <div className="header">
           <div className="time">45secs</div>
           <div className="name">Matching Game</div>
-          <Score valueArray={this.state.valueArray}/>
+          <Score valueArray={this.state.valueArray} assignValue={this.assignValue}/>
         </div>
         <div className="grid-wrap">
           <GameGrid 
