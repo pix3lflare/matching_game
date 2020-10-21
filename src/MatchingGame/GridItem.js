@@ -1,25 +1,18 @@
 import React from 'react';
 
 class GridItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isFlipped: false,
-    };
-  }
-
   render() {
-    const { isFlipped } = this.state;
-    const { value } = this.props;
-
+    const { item, selectItem, selectedItems } = this.props;
     return (
       <div
-        className={isFlipped ? 'grid-item flipped' : 'grid-item'}
-        onClick={() => {
-          this.setState({ isFlipped: !isFlipped });
-        }}
+        className={
+          selectedItems.indexOf(item.id) >= 0
+            ? 'grid-item flipped'
+            : 'grid-item'
+        }
+        onClick={() => selectItem(item)}
       >
-        <div className="value">{value}</div>
+        <div className="value">{item.value}</div>
       </div>
     );
   }

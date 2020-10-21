@@ -9,7 +9,24 @@ class GridRow extends React.Component {
       gridItems.push(<GridItem value={values[i]} />);
     }
 
-    return <div className="grid-row">{gridItems}</div>;
+class GridRow extends React.Component{
+  render(){
+      const {columnCount, values, selectItem, selectedItems} = this.props
+      const gridItems = []
+      for( var i = 0; i < columnCount; i++ ){
+          const item = values[i]
+          gridItems.push(<GridItem
+                item={item}
+                selectItem={selectItem}
+                selectedItems={selectedItems}
+            />
+          )
+      }
+      return (
+          <div className='grid-row'>
+              {gridItems}
+          </div>
+      )
   }
 }
 
