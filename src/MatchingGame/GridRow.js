@@ -8,6 +8,7 @@ class GridRow extends React.Component {
     for (var i = 0; i < columnCount; i++) {
       gridItems.push(<GridItem value={values[i]} />);
     }
+
     return <div className="grid-row">{gridItems}</div>;
   }
 }

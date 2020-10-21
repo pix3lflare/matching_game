@@ -11,6 +11,7 @@ class GridItem extends React.Component {
   render() {
     const { isFlipped } = this.state;
     const { value } = this.props;
+
     return (
       <div
         className={isFlipped ? 'grid-item flipped' : 'grid-item'}
