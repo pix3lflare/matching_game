@@ -2,15 +2,35 @@ import React from 'react';
 import '../matching_game.scss';
 import GameGrid from './GameGrid';
 import Score from './Score';
+import Timer from './Timer';
 import { v4 as uuidv4 } from 'uuid';
 
 class MatchingGame extends React.Component {
   state = {
     valueArray: [],
     selectedItems: [],
+    timeRemaining: 10,
+  };
+
+  endGame = () => {
+    console.log(`end game`);
   };
 
   componentDidMount() {
+    this.assignValue();
+    console.log(this.state);
+    this.timerInterval = setInterval(() => {
+      let timeRemaining = this.state.timeRemaining - 1;
+      if (timeRemaining >= 0) {
+        this.setState({ timeRemaining });
+        if (timeRemaining == 0) {
+          this.endGame();
+        }
+      }
+    }, 1000);
+  }
+
+  assignValue = () => {
     const { rowCount, columnCount } = this.props;
     const num = (rowCount * columnCount) / 2;
     const valueArray = [];
@@ -40,8 +60,7 @@ class MatchingGame extends React.Component {
       return 0.5 - Math.random();
     });
     this.setState({ valueArray });
-  }
-
+  };
   selectItem = item => {
     const selectedItems = this.state.selectedItems.concat(item.id);
     const items = this.state.valueArray.filter(
@@ -79,9 +98,12 @@ class MatchingGame extends React.Component {
     return (
       <div className="matching-game">
         <div className="header">
-          <div className="time">45secs</div>
+          <Timer timeRemaining={this.state.timeRemaining} />
           <div className="name">Matching Game</div>
-          <Score valueArray={this.state.valueArray} />
+          <Score
+            valueArray={this.state.valueArray}
+            assignValue={this.assignValue}
+          />
         </div>
         <div className="grid-wrap">
           <GameGrid
