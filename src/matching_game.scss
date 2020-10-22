@@ -47,6 +47,12 @@
           font-size: 40px;
           visibility: hidden;
         }
+
+        img{
+            width: 100%;
+            visibility: hidden;
+        }
+
       }
 
       .flipped {
@@ -55,6 +61,11 @@
         .value {
           visibility: visible;
         }
+
+        img{
+            visibility: visible;
+        }
+
       }
     }
   }

@@ -2,6 +2,8 @@ import React from 'react';
 
 class GridItem extends React.Component {
   render() {
+    //https://picsum.photos/id/237/200/300
+    //https://picsum.photos/id/<:id>/<:width>/<:height>
     const { item, selectItem, selectedItems } = this.props;
     return (
       <div
@@ -12,7 +14,9 @@ class GridItem extends React.Component {
         }
         onClick={() => selectItem(item)}
       >
-        <div className="value">{item.value}</div>
+        {/*<div className="value">{item.value}</div>*/}
+        <img src='https://picsum.photos/id/237/120/120'/>
+
       </div>
     );
   }

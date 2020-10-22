@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 class MatchingGame extends React.Component {
+
   state = {
     valueArray: [],
     selectedItems: [],
@@ -144,6 +145,7 @@ class MatchingGame extends React.Component {
             valueArray={this.state.valueArray}
           />
         </div>
+
         <div className="grid-wrap">
           <GameGrid
             valueArray={this.state.valueArray}
