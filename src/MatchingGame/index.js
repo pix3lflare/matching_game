@@ -15,6 +15,16 @@ class MatchingGame extends React.Component {
     valueArray: [],
     selectedItems: [],
     timeRemaining: 60,
+    gameMode: null,
+
+    player1: {
+        name: '',
+    },
+
+    player2: {
+        name: ''
+    },
+
     showStartModal: true,
     showWinModal: false,
     showLoseModal: false,
@@ -126,26 +136,43 @@ class MatchingGame extends React.Component {
     });
   };
   render() {
-    console.log('Index.js state', this.state);
     const { rowCount, columnCount } = this.props;
-    const {showStartModal, showWinModal, showLoseModal} = this.state
+    const {showStartModal, showWinModal, showLoseModal, gameMode, player1, player2, gameRunning} = this.state
 
     return (
       <div className="matching-game">
 
         {/* Modals */}
-        {showStartModal && <StartModal startNewGame={this.startNewGame}/>}
+        {showStartModal && <StartModal
+            gameMode={gameMode}
+            startNewGame={this.startNewGame}
+            setGameMode={(mode)=>{
+                this.setState({gameMode: mode})
+            }}
+            player1={player1}
+            player2={player2}
+
+            updatePlayer1={(field, value)=>{
+                const p1 = Object.assign({}, player1, {[field]: value})
+                this.setState({player1: p1})
+            }}
+
+            updatePlayer2={(field, value)=>{
+                const p2 = Object.assign({}, player2, {[field]: value})
+                this.setState({player2: p2})
+            }}
+        />}
         {showWinModal && <WinModal  startNewGame={this.startNewGame}/>}
         {showLoseModal && <LoseModal  startNewGame={this.startNewGame}/>}
 
         {/* Game */}
-        <div className="header">
-          <Timer timeRemaining={this.state.timeRemaining} />
-          <div className="name">Matching Game</div>
-          <Score
-            valueArray={this.state.valueArray}
-          />
-        </div>
+        {gameRunning &&
+            <div className="header">
+              <Timer timeRemaining={this.state.timeRemaining} />
+              <div className="name">Matching Game</div>
+              <Score valueArray={this.state.valueArray}/>
+            </div>
+        }
 
         <div className="grid-wrap">
           <GameGrid
