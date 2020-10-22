@@ -6,6 +6,7 @@ import Timer from './Timer';
 import StartModal from './StartModal'
 import WinModal from './WinModal'
 import LoseModal from './LoseModal'
+import Header from './Header'
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -167,11 +168,13 @@ class MatchingGame extends React.Component {
 
         {/* Game */}
         {gameRunning &&
-            <div className="header">
-              <Timer timeRemaining={this.state.timeRemaining} />
-              <div className="name">Matching Game</div>
-              <Score valueArray={this.state.valueArray}/>
-            </div>
+            <Header 
+            gameMode={gameMode}
+            timeRemaining={this.state.timeRemaining}
+            valueArray={this.state.valueArray}
+            player1={player1}
+            player2={player2}
+            />
         }
 
         <div className="grid-wrap">
