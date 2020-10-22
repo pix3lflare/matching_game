@@ -118,8 +118,7 @@ class MatchingGame extends React.Component {
         let totalMatches = valueArray.filter((i)=>i.matched===true)
 
         if( valueArray.length === totalMatches.length ){
-            console.log('All Matches Found')
-            this.setState({valueArray, gameRunning: false, showWinModal: true});
+            this.setState({valueArray, showWinModal: true});
         }else{
             this.setState({valueArray});
         }
@@ -166,7 +165,15 @@ class MatchingGame extends React.Component {
                 this.setState({player2: p2})
             }}
         />}
-        {showWinModal && <WinModal  startNewGame={this.startNewGame}/>}
+        {showWinModal &&
+            <WinModal
+                valueArray={this.state.valueArray}
+                player1={player1}
+                player2={player2}
+                gameMode={gameMode}
+                startNewGame={this.startNewGame}
+            />
+        }
         {showLoseModal && <LoseModal  startNewGame={this.startNewGame}/>}
 
         {/* Game */}

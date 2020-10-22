@@ -22,7 +22,10 @@ export default class Header extends Component {
             :
             <div className="header">
               <div className={currentUser==1 ? "name bold" : "name"}>{player1.name} score {score1}/16</div>
-              <div className="name">Matching Game</div>
+              <div className='round-wrap'>
+                  <div className="name">Round</div>
+                  <div className='round'>1 of 3</div>
+              </div>
               <div className={currentUser==2 ? "name bold" : "name"}>{player2.name} score {score2}/16</div>
             </div>
         )

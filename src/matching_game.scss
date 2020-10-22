@@ -25,6 +25,19 @@
     .score {
       position: relative;
     }
+
+    .round-wrap{
+        position: relative;
+
+        .name{
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .round{
+            position: relative;
+        }
+    }
   }
 
   .grid-wrap {
