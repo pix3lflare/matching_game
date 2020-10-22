@@ -30,10 +30,11 @@ class MatchingGame extends React.Component {
     showWinModal: false,
     showLoseModal: false,
     gameRunning: false,
+
+    currentUser: 1,
   };
 
   startNewGame = () => {
-    console.log('Start New Game')
 
     // Initialize Grid Values
     const { rowCount, columnCount } = this.props;
@@ -50,12 +51,14 @@ class MatchingGame extends React.Component {
         id: uuidv4(),
         value: `https://picsum.photos/id/${randomNum}/120/120`,
         matched: false,
+        matchedBy: null,
       };
 
       const item2 = {
         id: uuidv4(),
         value: `https://picsum.photos/id/${randomNum}/120/120`,
         matched: false,
+        matchedBy: null,
       };
 
       valueArray.push(item1);
@@ -76,10 +79,11 @@ class MatchingGame extends React.Component {
         gameRunning: true,
      }, () => {
             // Begin Count Down
+            const {timeRemaining, gameRunning, gameMode} = this.state
+
             this.timerInterval = setInterval(() => {
-              let timeRemaining = this.state.timeRemaining - 1;
-              if(timeRemaining >= 0 && this.state.gameRunning) {
-                this.setState({ timeRemaining });
+              if(timeRemaining >= 0 && gameRunning && gameMode=='single') {
+                this.setState({ timeRemaining:  timeRemaining - 1});
                 if (timeRemaining === 0) {
                   clearInterval(this.timerInterval)
                   this.gameLost();
@@ -90,7 +94,6 @@ class MatchingGame extends React.Component {
   }
 
   gameLost = () => {
-      console.log('Game Lost');
       this.setState({
         gameRunning: false,
         showLoseModal: true,
@@ -105,10 +108,9 @@ class MatchingGame extends React.Component {
 
     if (items.length === 2) {
       if (items[0].value === items[1].value) {
-        console.log('Found a Match');
         const valueArray = this.state.valueArray.map(i => {
           if (i.id === items[0].id || i.id === items[1].id) {
-            return Object.assign({}, i, { matched: true });
+            return Object.assign({}, i, { matched: true, matchedBy: this.state.currentUser });
           }
           return i;
         });
@@ -122,8 +124,9 @@ class MatchingGame extends React.Component {
             this.setState({valueArray});
         }
 
-      } else {
-        console.log('Not a Match');
+      } else if( this.state.gameMode == 'two' ){
+        const currentUser = this.state.currentUser == 1 ? 2 : 1;
+        this.setState({currentUser})
       }
 
       setTimeout(() => {
@@ -138,7 +141,7 @@ class MatchingGame extends React.Component {
   };
   render() {
     const { rowCount, columnCount } = this.props;
-    const {showStartModal, showWinModal, showLoseModal, gameMode, player1, player2, gameRunning} = this.state
+    const {showStartModal, showWinModal, showLoseModal, gameMode, player1, player2, gameRunning, currentUser} = this.state
 
     return (
       <div className="matching-game">
@@ -174,6 +177,7 @@ class MatchingGame extends React.Component {
             valueArray={this.state.valueArray}
             player1={player1}
             player2={player2}
+            currentUser={currentUser}
             />
         }
 

@@ -9,7 +9,7 @@ class GridItem extends React.Component {
       <div
         className={
           selectedItems.indexOf(item.id) >= 0 || item.matched
-            ? 'grid-item flipped'
+            ? `grid-item flipped matched-${item.matchedBy}`
             : 'grid-item'
         }
         onClick={() => selectItem(item)}

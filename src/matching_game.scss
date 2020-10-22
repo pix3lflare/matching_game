@@ -18,6 +18,10 @@
       position: relative;
     }
 
+    .bold{
+        font-weight: bold;
+    }
+
     .score {
       position: relative;
     }
@@ -67,6 +71,15 @@
         }
 
       }
+
+      .matched-1{
+          border: 3px solid #35dece;
+      }
+
+      .matched-2{
+          border: 3px solid #de8335;
+      }
+
     }
   }
 }
