@@ -2,7 +2,7 @@ import React from 'react'
 
 export default class StartModal extends React.Component{
     render(){
-        const {gameMode, setGameMode, player1, player2, updatePlayer1, updatePlayer2, startNewGame} = this.props
+        const {gameMode, setGameMode, player1, player2, updatePlayer1, updatePlayer2, startNewGame, requestedRounds, updateRequestedRounds} = this.props
 
         return(
             <div className='modal-screen'>
@@ -39,7 +39,11 @@ export default class StartModal extends React.Component{
                             value={player2.name}
                             onChange={(e)=>updatePlayer2('name', e.target.value)}
                         />
-
+                        <input
+                            type='number'
+                            value={requestedRounds}
+                            onChange={(e)=>updateRequestedRounds(e.target.value)}
+                        />
                         <div className='button' onClick={startNewGame}>Begin</div>
                     </div>
                 }

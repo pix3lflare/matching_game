@@ -20,10 +20,12 @@ class MatchingGame extends React.Component {
 
     player1: {
         name: '',
+        roundsWon: 0,
     },
 
     player2: {
-        name: ''
+        name: '',
+        roundsWon: 0,
     },
 
     showStartModal: true,
@@ -32,6 +34,8 @@ class MatchingGame extends React.Component {
     gameRunning: false,
 
     currentUser: 1,
+    requestedRounds: 1,
+    currentRound: 1,
   };
 
   startNewGame = () => {
@@ -116,9 +120,23 @@ class MatchingGame extends React.Component {
         });
 
         let totalMatches = valueArray.filter((i)=>i.matched===true)
+        const score1 = valueArray.filter((item)=> item.matched && item.matchedBy==1).length
+        const score2 = valueArray.filter((item)=> item.matched && item.matchedBy==2).length
+        let { player1, player2, currentRound, requestedRounds } = this.state
+        
 
         if( valueArray.length === totalMatches.length ){
-            this.setState({valueArray, showWinModal: true});
+          console.log('All Items Flipped', this.state.currentRound)
+          let player1Clone = Object.assign({}, player1, {roundsWon: (score1>score2 ? player1.roundsWon+1 : player1.roundsWon )})
+          let player2Clone = Object.assign({}, player2, {roundsWon: (score1<score2 ? player2.roundsWon+1 : player2.roundsWon )})
+          console.log('CurrentRounds', currentRound)
+          console.log('roundsRequested', requestedRounds)
+          if(currentRound < requestedRounds) {
+            console.log("Updated CurrentRounds", this.state.currentRound)
+            this.setState({valueArray, player1: player1Clone, player2: player2Clone, currentRound: currentRound+1}, ()=> {this.startNewGame()});
+          } else {
+            this.setState({valueArray, player1: player1Clone, player2: player2Clone, showWinModal: true})
+          } 
         }else{
             this.setState({valueArray});
         }
@@ -138,9 +156,17 @@ class MatchingGame extends React.Component {
       selectedItems,
     });
   };
+
+  updateRequestedRounds = (e) => {
+    this.setState({
+      requestedRounds: e
+    })
+    
+  }
+
   render() {
     const { rowCount, columnCount } = this.props;
-    const {showStartModal, showWinModal, showLoseModal, gameMode, player1, player2, gameRunning, currentUser} = this.state
+    const {showStartModal, showWinModal, showLoseModal, gameMode, player1, player2, gameRunning, currentUser, requestedRounds, currentRound} = this.state
 
     return (
       <div className="matching-game">
@@ -164,6 +190,9 @@ class MatchingGame extends React.Component {
                 const p2 = Object.assign({}, player2, {[field]: value})
                 this.setState({player2: p2})
             }}
+            requestedRounds={requestedRounds}
+            updateRequestedRounds={this.updateRequestedRounds}
+
         />}
         {showWinModal &&
             <WinModal
@@ -185,6 +214,8 @@ class MatchingGame extends React.Component {
             player1={player1}
             player2={player2}
             currentUser={currentUser}
+            requestedRounds={requestedRounds}
+            currentRound={currentRound}
             />
         }
 
