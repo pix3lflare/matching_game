@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import {ThemeContext} from './theme_context'
 
 export default class ThemeSelector extends Component {
+  static contextType = ThemeContext;
+
   render() {
-    const {theme, updateTheme} = this.props
+    const {theme, updateTheme} = this.context
 
     return (
       <div className="theme-selector">

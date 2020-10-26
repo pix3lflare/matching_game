@@ -1,6 +1,7 @@
 import React from 'react'
 import TopNav from './TopNav'
 import Content from './Content'
+import {ThemeContext} from './theme_context'
 
 
 export default class Dashboard extends React.Component{
@@ -8,7 +9,7 @@ export default class Dashboard extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            theme: 'light'
+            theme: 'dark'
         }
     }
 
@@ -20,11 +21,15 @@ export default class Dashboard extends React.Component{
         const {theme} = this.state
 
         return(
-            <div className='dashboard'>
-                <TopNav theme={theme} updateTheme={this.updateTheme}/>
-                <Content theme={theme}/>
-            </div>
+            <ThemeContext.Provider value={{
+                theme,
+                updateTheme: this.updateTheme
+            }}>
+                <div className='dashboard'>
+                    <TopNav/>
+                    <Content/>
+                </div>
+            </ThemeContext.Provider>
         )
     }
-
 }
