@@ -9,7 +9,7 @@ export default class NavBtn extends Component {
     const theme = this.context.theme
 
     return (
-      <div className={`nav-btn ${theme}`} >
+      <div className={`nav-btn ${theme}`} onClick={this.props.onClick}>
         {icon}
         <label>{this.props.label}</label>
       </div>
