@@ -15,7 +15,7 @@ class GridItem extends React.Component {
         onClick={() => selectItem(item)}
       >
         <img src={item.value} alt="..."/>
-       
+      
 
       </div>
     );
