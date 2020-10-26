@@ -23,7 +23,7 @@ export default class Dashboard extends React.Component{
         return(
             <ThemeContext.Provider value={{
                 theme,
-                updateTheme: this.updateTheme
+                updateTheme: this.updateTheme,
             }}>
                 <div className='dashboard'>
                     <TopNav/>
