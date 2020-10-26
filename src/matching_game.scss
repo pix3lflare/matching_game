@@ -18,8 +18,31 @@
       position: relative;
     }
 
+    .bold {
+      font-weight: bold;
+    }
+
     .score {
       position: relative;
+    }
+
+    .round-wrap {
+      position: relative;
+
+      .name {
+        font-size: 30px;
+        font-weight: bold;
+      }
+
+      .round {
+        position: relative;
+      }
+    }
+    .playerStats {
+      position: relative;
+      .roundsWon {
+        position: relative;
+      }
     }
   }
 
@@ -47,6 +70,11 @@
           font-size: 40px;
           visibility: hidden;
         }
+
+        img {
+          width: 100%;
+          visibility: hidden;
+        }
       }
 
       .flipped {
@@ -55,6 +83,18 @@
         .value {
           visibility: visible;
         }
+
+        img {
+          visibility: visible;
+        }
+      }
+
+      .matched-1 {
+        border: 3px solid #35dece;
+      }
+
+      .matched-2 {
+        border: 3px solid #de8335;
       }
     }
   }
@@ -82,20 +122,44 @@
     border-radius: 6px;
     flex-direction: column;
 
-    .title {
+    .modal {
       position: relative;
-      font-size: 24px;
-      margin-bottom: 30px;
-    }
-
-    .button {
-      position: relative;
-      background: #00cdff;
-      width: 200px;
-      line-height: 60px;
+      background: #fff;
+      width: 300px;
+      height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       border-radius: 6px;
-      color: #fff;
-      font-size: 23px;
+      flex-direction: column;
+      padding-top: 8px;
+      padding-bottom: 8px;
+
+      .title {
+        position: relative;
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      input {
+        position: relative;
+        outline: none;
+        width: 190px;
+        line-height: 30px;
+        margin-bottom: 5px;
+        text-indent: 5px;
+      }
+
+      .button {
+        position: relative;
+        background: #00cdff;
+        width: 200px;
+        line-height: 60px;
+        border-radius: 6px;
+        color: #fff;
+        font-size: 23px;
+        margin-bottom: 10px;
+      }
     }
   }
 }

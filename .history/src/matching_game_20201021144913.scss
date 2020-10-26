@@ -1,0 +1,68 @@
+.matching-game {
+  position: relative;
+  background: #eee;
+  width: 800px;
+  margin: auto;
+
+  .header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 10px;
+
+    .time {
+      position: relative;
+    }
+
+    .name {
+      position: relative;
+    }
+
+    .score {
+      position: relative;
+    }
+  }
+
+  .grid-wrap {
+    position: relative;
+
+    .grid-row {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+
+      .grid-item {
+        position: relative;
+        background: #818684;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 120px;
+        height: 120px;
+        border-radius: 6px;
+        color: #fff;
+
+        .value {
+          font-size: 40px;
+          visibility: hidden;
+        }
+      }
+
+      .flipped {
+        background: #0092ff;
+
+        .value {
+          visibility: visible;
+        }
+      }
+    }
+  }
+}
+
+
+.modal-screen {
+  position: relative;
+  
+}
