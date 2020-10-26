@@ -3,13 +3,19 @@ import '../matching_game.scss';
 import GameGrid from './GameGrid';
 import Score from './Score';
 import Timer from './Timer';
+import StartModal from './StartModal';
+import WinModal from './WinModal';
+import LoseModal from './LoseModal';
 import { v4 as uuidv4 } from 'uuid';
 
 class MatchingGame extends React.Component {
   state = {
     valueArray: [],
     selectedItems: [],
-    timeRemaining: 60,
+    timeRemaining: 10,
+    showStartModal: true,
+    showWinModal: false,
+    showLoseModal: false,
   };
 
   endGame = () => {
@@ -93,9 +99,16 @@ class MatchingGame extends React.Component {
   };
   render() {
     const { rowCount, columnCount } = this.props;
+    const { showStartModal, showWinModal, showLoseModal } = this.state;
 
     return (
       <div className="matching-game">
+        {/* Modals */}
+        {showStartModal && <StartModal />}
+        {showWinModal && <WinModal />}
+        {showLoseModal && <LoseModal />}
+
+        {/* Game */}
         <div className="header">
           <Timer timeRemaining={this.state.timeRemaining} />
           <div className="name">Matching Game</div>
