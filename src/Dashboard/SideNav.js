@@ -14,6 +14,14 @@ export default class SideNav extends Component {
                 <NavBtn
                     icon={<i class="fas fa-user"></i>}
                     label='Profile'
+                    onClick={()=>{
+                        fetch("http://localhost:9000/testAPI/")
+                        .then(res => res.text())
+                        .then(res => {
+                            console.log('Response')
+                            console.log(res)
+                        });
+                    }}
                 />
 
                 <NavBtn
