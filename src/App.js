@@ -1,12 +1,15 @@
 import React from 'react';
 import './App.css';
+import './dashboard.scss';
 import MatchingGame from './MatchingGame';
+import Dashboard from './Dashboard';
+
 
 class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <MatchingGame rowCount={3} columnCount={2} />
+        <Dashboard/>
       </div>
     );
   }

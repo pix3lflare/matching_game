@@ -1,0 +1,147 @@
+.dashboard{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+
+    .top-nav{
+        position: relative;
+        background: #ccc;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 50px;
+        padding: 0px 10px;
+
+        .name{
+            position: relative;
+        }
+
+        .theme-selector{
+            position: relative;
+
+            label{
+                position: relative;
+                text-transform: capitalize;
+            }
+
+            .dd-menu{
+                position: absolute;
+                background: #fff;
+                z-index: 3;
+                width: 200px;
+                right: 0px;
+                border-radius: 6px;
+                box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+                overflow: hidden;
+                display: none;
+
+                .dd-item{
+                    position: relative;
+                    border-bottom: 1px solid #ccc;
+                    line-height: 40px;
+                    cursor: pointer;
+                }
+
+                .dd-item:hover{
+                    background: #dffbfa;
+                    color: #000;
+                }
+
+            }
+        }
+
+        .theme-selector:hover .dd-menu{
+            display: block;
+        }
+
+    }
+
+    .content-section{
+        position: relative;
+        display: flex;
+        flex: 1;
+
+        .side-nav{
+            position: relative;
+            background: #909090;
+            width: 300px;
+
+            .nav-btn{
+                position: relative;
+                border-bottom: 1px solid #fff;
+                margin-bottom: 5px;
+                text-align: left;
+                line-height: 50px;
+                padding: 0px 10px;
+                color: #fff;
+
+                i{
+                    margin-right: 5px;
+                }
+
+                label{
+                    position: relative;
+                    margin: 0;
+                }
+
+            }
+        }
+
+        .content-pane{
+            position: relative;
+            flex: 1;
+        }
+    }
+}
+
+.content-pane.dark{
+    background: #000;
+    color: #fff;
+}
+
+.content-pane.light{
+    background: #fff;
+    color: #10a6a7;
+}
+
+.top-nav.dark{
+    background: #5f5b5b;
+    color: #fff;
+}
+
+.top-nav.light{
+    background: #ccc;
+    color: #10a6a7;
+}
+
+.dd-item.dark{
+    background: #5f5b5b;
+    color: #fff;
+}
+
+.dd-item.light{
+    background: #ccc;
+    color: #10a6a7;
+}
+
+.side-nav.dark{
+    background: #5f5959 !important;
+    color: #fff;
+}
+
+.side-nav.light{
+    background: #bbccc6 !important;
+    color: #10a6a7;
+}
+
+.nav-btn.dark{
+    background: #246186 !important;
+    color: #fff;
+}
+
+.nav-btn.light{
+    background: #92f34c !important;
+    color: #10a6a7 !important;
+}
