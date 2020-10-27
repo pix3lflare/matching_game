@@ -67,6 +67,9 @@
 
     .todo-dashboard{
         position: relative;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
 
         .tool-bar{
             display: flex;
@@ -166,6 +169,68 @@
 
         .super-nav:hover .super-dd-menu{
             display: block;
+        }
+
+        .list-container{
+            position: relative;
+            background: rgba(255,255,255,0.8);
+            flex: 1;
+            margin-bottom: 50px;
+            display: flex;
+            flex-direction: column;
+
+            .todo-list{
+                position: relative;
+                flex: 1;
+
+                .todo-item{
+                    position: relative;
+                    border-bottom: 1px solid #c7cff7;
+                    text-align: left;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    height: 50px;
+                    padding: 0px 15px;
+                    color: #3f51b5;
+
+                    .left{
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .right{
+                        display: flex;
+                        align-items: center;
+
+                        svg{
+                            cursor: pointer;
+                            margin-left: 10px;
+                            fill: #ccc;
+                        }
+
+                        svg:hover{
+                            fill: #3f51b5;
+                        }
+                    }
+                }
+
+            }
+
+            .control-bar{
+                position: relative;
+                background: #333;
+                height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                padding: 0px 15px;
+
+                .btn{
+                    position: relative;
+                    margin-left: 10px;
+                }
+            }
         }
 
     }
