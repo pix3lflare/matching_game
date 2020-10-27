@@ -13,7 +13,7 @@ export default class LoginScreen extends React.Component{
 
                 <TextField
                     className='text-field'
-                    label="Username"
+                    label="Email"
                     variant="filled"
                     fullWidth={true}
                 />
@@ -28,6 +28,7 @@ export default class LoginScreen extends React.Component{
 
                 <Button className='btn' variant="contained" color="primary">Login</Button>
                 <div className='forgot-link'>Forgot Password?</div>
+
             </Container>
         )
     }
