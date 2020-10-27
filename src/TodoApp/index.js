@@ -15,7 +15,8 @@ export default class TodoApp extends React.Component{
                 {/*<LoginScreen/>*/}
                 {/*<RegisterScreen/>*/}
                 {/*<ForgotPasswordScreen/>*/}
-                <PasswordResetScreen/>
+                {/*<PasswordResetScreen/>*/}
+                <TodoListScreen/>
             </div>
         )
     }
