@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Button, TextField } from '@material-ui/core';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 
-export default class ForgotPasswordScreen extends React.Component{
+export default class PasswordResetScreen extends React.Component{
     render(){
         return (
             <Container className='screen'>
@@ -13,9 +13,18 @@ export default class ForgotPasswordScreen extends React.Component{
 
                 <TextField
                     className='text-field'
-                    label="Email"
+                    label="Password"
                     variant="filled"
                     fullWidth={true}
+                    type='password'
+                />
+
+                <TextField
+                    className='text-field'
+                    label="Confirm Password"
+                    variant="filled"
+                    fullWidth={true}
+                    type='password'
                 />
 
                 <Button className='btn' variant="contained" color="primary">Reset Password</Button>
