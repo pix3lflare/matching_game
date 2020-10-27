@@ -10,7 +10,9 @@ export default class TodoApp extends React.Component{
     render(){
         return (
             <div className='todo-app'>
-                <HomeScreen/>
+                {/*<HomeScreen/>*/}
+                {/*<LoginScreen/>*/}
+                <RegisterScreen/>
             </div>
         )
     }

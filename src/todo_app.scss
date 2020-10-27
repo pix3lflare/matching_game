@@ -35,6 +35,26 @@
             margin-bottom: 15px;
         }
 
+        .text-field{
+            display: block;
+            margin: auto;
+            width: 300px;
+            height: 50px;
+            margin-bottom: 15px;
+        }
+
+        .input-row{
+            margin: auto;
+            width: 300px;
+            display: flex;
+            justify-content: space-between;
+
+            .text-field{
+                width: 145px;
+                margin: 0px 0px 15px 0px;
+            }
+        }
+
         .forgot-link{
             position: relative;
             cursor: pointer;
