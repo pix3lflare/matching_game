@@ -3,6 +3,7 @@ import HomeScreen from './HomeScreen'
 import LoginScreen from './LoginScreen'
 import RegisterScreen from './RegisterScreen'
 import ForgotPasswordScreen from './ForgotPasswordScreen'
+import PasswordResetScreen from './PasswordResetScreen'
 import TodoListScreen from './TodoListScreen'
 
 
@@ -12,7 +13,9 @@ export default class TodoApp extends React.Component{
             <div className='todo-app'>
                 {/*<HomeScreen/>*/}
                 {/*<LoginScreen/>*/}
-                <RegisterScreen/>
+                {/*<RegisterScreen/>*/}
+                {/*<ForgotPasswordScreen/>*/}
+                <PasswordResetScreen/>
             </div>
         )
     }
