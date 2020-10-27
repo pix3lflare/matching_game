@@ -1,0 +1,47 @@
+.todo-app{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 50px 0px;
+    background: linear-gradient(180deg, rgba(67,157,204,1) 0%, rgba(124,41,194,1) 100%);
+    color: #fff;
+
+    .screen{
+        position: relative;
+
+        svg{
+            position: relative;
+            width: auto;
+            height: 100px;
+        }
+
+        .title{
+            position: relative;
+            font-size: 40px;
+        }
+
+        .description{
+            position: relative;
+            font-size: 20px;
+            margin: 6px 0px 30px 0px;
+        }
+
+        .btn{
+            position: relative;
+            display: block;
+            margin: auto;
+            width: 300px;
+            height: 50px;
+            margin-bottom: 15px;
+        }
+
+        .forgot-link{
+            position: relative;
+            cursor: pointer;
+        }
+
+        .forgot-link:hover{
+            color: #8dc9ff;
+        }
+    }
+}
