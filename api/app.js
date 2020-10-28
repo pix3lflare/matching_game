@@ -6,10 +6,21 @@ var logger = require('morgan');
 var cors = require("cors");
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/users/users');
 var testAPIRouter = require("./routes/testAPI");
 
 var app = express();
+
+// Setup Mongoose
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017/react_db', {
+    useNewUrlParser : true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+})
+.then(() => {console.log('mongodb connected')})
+.catch(()=> {console.log('server err')});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

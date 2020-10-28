@@ -13,10 +13,10 @@ export default class TodoApp extends React.Component{
             <div className='todo-app'>
                 {/*<HomeScreen/>*/}
                 {/*<LoginScreen/>*/}
-                {/*<RegisterScreen/>*/}
+                <RegisterScreen/>
                 {/*<ForgotPasswordScreen/>*/}
                 {/*<PasswordResetScreen/>*/}
-                <TodoListScreen/>
+                {/*<TodoListScreen/>*/}
             </div>
         )
     }
