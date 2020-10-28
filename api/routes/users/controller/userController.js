@@ -24,10 +24,10 @@ module.exports = {
        }
     },
 
-    /*
-    signin: async (req, res) => {
+    login: async (req, res) => {
         try {
             let foundUser = await findOneUser(req.body.email);
+
             if (foundUser === 404) {
                 throw {
                     status: 500,
@@ -41,6 +41,7 @@ module.exports = {
                     message: 'Check your email and password'
                 }
             }
+
             let jwtToken = await createJwtToken(foundUser);
             res.status(200).json({
                 token: jwtToken
@@ -52,6 +53,5 @@ module.exports = {
             })
         }
     }
-    */
 
 }

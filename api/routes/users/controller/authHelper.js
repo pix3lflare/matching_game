@@ -2,6 +2,7 @@ const User = require('../model/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+
 async function createUser(user) {
 
     let newUser = await new User({
@@ -59,7 +60,6 @@ async function createJwtToken(user) {
     let payload = {
         id: user._id,
         email: user.email,
-        username: user.username
     }
     let jwtToken = await jwt.sign(payload, process.env.SECRET_KEY, {expiresIn: 3600});
     return jwtToken;
