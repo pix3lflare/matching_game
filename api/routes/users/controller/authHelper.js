@@ -22,7 +22,7 @@ async function hashPassword(password) {
 
 async function errorHandler(error) {
     if ( error.code==11000 ) {
-        return 'Email Already Exist! Please Choose Another One';
+        return 'Email Already Exist!';
     }else{
         return error.message
     }

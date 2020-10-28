@@ -15,6 +15,8 @@ export default class RegisterScreen extends React.Component{
             },
 
             errorFields: [],
+            registrationComplete: false,
+            registrationError: '',
         }
     }
 
@@ -25,7 +27,7 @@ export default class RegisterScreen extends React.Component{
         this.setState({user, errorFields})
     }
 
-    handleRegister = () => {
+    handleRegister = async () => {
         const {firstName, lastName, phone, email, password} = this.state.user
         console.log('Register User')
 
@@ -51,18 +53,40 @@ export default class RegisterScreen extends React.Component{
             errorFields.push('password')
         }
 
-        this.setState({errorFields})
+        this.setState({errorFields, registrationError: ''})
 
         // Register User
         if( errorFields.length == 0 ){
             console.log('No Error. Submit Form')
-        }
+            let registerURL = 'http://localhost:9000/api/users/register/'
+            const response = await fetch(registerURL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(this.state.user)
+            });
 
+            if(response.status==200){
+                console.log('Registration Successful')
+                const user = {
+                    firstName: '',
+                    lastName: '',
+                    phone: '',
+                    email: '',
+                    password: '',
+                }
+                this.setState({registrationComplete: true, user})
+            }else{
+                console.log('Server-side Validation Failed')
+                let respJson = await response.json()
+                console.log(respJson)
+                this.setState({registrationError: respJson.message})
+            }
+        }
     }
 
     render(){
         const {firstName, lastName, phone, email, password} = this.state.user
-        const {errorFields} = this.state
+        const {errorFields, registrationError, registrationComplete} = this.state
 
         return (
             <Container className='screen'>
@@ -70,6 +94,9 @@ export default class RegisterScreen extends React.Component{
                 <ListAltIcon/>
                 <div className='title'>Todo App</div>
                 <div className='description'>Best App To Get Organized</div>
+
+                {registrationError && <div className='alert-msg'>{registrationError}</div>}
+                {registrationComplete && <div className='success-msg'>Registration Success</div>}
 
                 <div className='input-row'>
 
@@ -89,6 +116,7 @@ export default class RegisterScreen extends React.Component{
                         variant="filled"
                         fullWidth={true}
                         value={lastName}
+                        error={errorFields.indexOf('lastName') >= 0 ? true : false}
                         onChange={(e) => this.updateUser('lastName', e.target.value)}
                     />
 
@@ -100,6 +128,7 @@ export default class RegisterScreen extends React.Component{
                     variant="filled"
                     fullWidth={true}
                     value={phone}
+                    error={errorFields.indexOf('phone') >= 0 ? true : false}
                     onChange={(e) => this.updateUser('phone', e.target.value)}
                 />
 
@@ -110,6 +139,7 @@ export default class RegisterScreen extends React.Component{
                     variant="filled"
                     fullWidth={true}
                     value={email}
+                    error={errorFields.indexOf('email') >= 0 ? true : false}
                     onChange={(e) => this.updateUser('email', e.target.value)}
                 />
 
@@ -120,6 +150,7 @@ export default class RegisterScreen extends React.Component{
                     variant="filled"
                     fullWidth={true}
                     value={password}
+                    error={errorFields.indexOf('password') >= 0 ? true : false}
                     onChange={(e) => this.updateUser('password', e.target.value)}
                 />
 

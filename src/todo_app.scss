@@ -26,6 +26,28 @@
             margin: 6px 0px 30px 0px;
         }
 
+        .alert-msg{
+            position: relative;
+            background: #ffb300;
+            width: 300px;
+            margin: auto;
+            margin-bottom: 10px;
+            line-height: 40px;
+            border-radius: 6px;
+            border: 1px solid #ffd981;
+        }
+
+        .success-msg{
+            position: relative;
+            background: #1b9a55;
+            width: 300px;
+            margin: auto;
+            margin-bottom: 10px;
+            line-height: 40px;
+            border-radius: 6px;
+            border: 1px solid #2cbd6e;
+        }
+
         .btn{
             position: relative;
             display: block;
