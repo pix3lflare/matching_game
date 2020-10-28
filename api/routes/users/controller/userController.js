@@ -18,8 +18,8 @@ module.exports = {
             });
        } catch (error) {
             let errorMessage = await errorHandler(error);
-            res.status(errorMessage.status).json({
-                message: errorMessage.message
+            res.status(409).json({
+                message: errorMessage
             })
        }
     },

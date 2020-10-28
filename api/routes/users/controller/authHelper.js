@@ -21,14 +21,11 @@ async function hashPassword(password) {
 }
 
 async function errorHandler(error) {
-    let errorMessage = null;
-    if (error.errmsg.includes('email_1')) {
-        errorMessage = 'Email Already Exist! Please Choose Another One';
+    if ( error.code==11000 ) {
+        return 'Email Already Exist! Please Choose Another One';
+    }else{
+        return error.message
     }
-    return {
-        status: 409,
-        message: errorMessage
-    };
 }
 
 async function findOneUser(email) {
