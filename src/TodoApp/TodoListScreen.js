@@ -1,9 +1,33 @@
 import React from 'react';
-import { Container, Button, AppBar, Toolbar, Avatar} from '@material-ui/core';
+import { Container, Button, AppBar, Toolbar, Avatar, Checkbox} from '@material-ui/core';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import EditIcon from '@material-ui/icons/Edit';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+
+
+class TodoItem extends React.Component{
+    render(){
+        return (
+            <div className='todo-item'>
+
+                <div className='left'>
+                    <Checkbox/>
+                    <div className='description'>Todo Item</div>
+                </div>
+
+                <div className='right'>
+                    <EditIcon/>
+                    <HighlightOffIcon/>
+                </div>
+
+            </div>
+        )
+    }
+}
+
 
 export default class TodoListScreen extends React.Component{
     render(){
@@ -45,6 +69,24 @@ export default class TodoListScreen extends React.Component{
                   </Toolbar>
 
                 </AppBar>
+
+                {/* List Container */}
+                <div className='list-container'>
+
+                    <div className='todo-list'>
+                        <TodoItem/>
+                        <TodoItem/>
+                        <TodoItem/>
+                        <TodoItem/>
+                        <TodoItem/>
+                    </div>
+
+                    <div className='control-bar'>
+                        <Button variant="contained" color="primary" className='btn'>Complete</Button>
+                        <Button variant="contained" color="secondary" className='btn'>Delete</Button>
+                    </div>
+
+                </div>
 
             </Container>
         )
