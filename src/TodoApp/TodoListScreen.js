@@ -46,15 +46,16 @@ class TodoModal extends React.Component{
 
 class TodoItem extends React.Component{
     render(){
-        const {item, editItem, deleteItem} = this.props
+        const {item, editItem, deleteItem, completeItem} = this.props
 
         return (
-            <div className='todo-item'>
+            <div className={item.isComplete ? 'todo-item completed' : 'todo-item'}>
                 <div className='left'>
                     <Checkbox/>
                     <div className='description'>{item.description}</div>
                 </div>
                 <div className='right'>
+                    <div className='complete-btn' onClick={completeItem}>Completed</div>
                     <EditIcon onClick={editItem}/>
                     <HighlightOffIcon onClick={deleteItem}/>
                 </div>
@@ -140,6 +141,29 @@ export default class TodoListScreen extends React.Component{
         this.setState({todoList})
     }
 
+    completeItem = async (item) => {
+        const {token} = this.state
+        const updatedItem = Object.assign({}, item, {isComplete: true})
+        const updateUrl = 'http://localhost:9000/api/todos/'
+        const response = await fetch(updateUrl, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(updatedItem)
+        });
+
+        const todoList = this.state.todoList.map((i)=>{
+            if( i._id == updatedItem._id ){
+                return updatedItem
+            }
+
+            return i
+        })
+        this.setState({todoList})
+    }
+
     render(){
         const todoItems = this.state.todoList.map((item)=><TodoItem
             key={item._id}
@@ -148,6 +172,7 @@ export default class TodoListScreen extends React.Component{
                 this.setState({modalItem: item, showTodoModal: true})
             }}
             deleteItem={()=>this.deleteItem(item._id)}
+            completeItem={()=>this.completeItem(item)}
         />)
         const {showTodoModal, modalItem} = this.state
         return (

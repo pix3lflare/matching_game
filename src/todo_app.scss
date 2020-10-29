@@ -225,6 +225,20 @@
                         display: flex;
                         align-items: center;
 
+                        .complete-btn{
+                            position: relative;
+                            color: #fff;
+                            padding: 5px 15px;
+                            font-size: 12px;
+                            border-radius: 4px;
+                            cursor: pointer;
+                            background: #ccc;
+                        }
+
+                        .complete-btn:hover{
+                            background: #03a906;
+                        }
+
                         svg{
                             cursor: pointer;
                             margin-left: 10px;
@@ -234,6 +248,15 @@
                         svg:hover{
                             fill: #3f51b5;
                         }
+                    }
+                }
+
+                .todo-item.completed{
+                    background: #e8f4df;
+                    color: #4c8423;
+
+                    .complete-btn{
+                        visibility: hidden !important;
                     }
                 }
 
