@@ -8,7 +8,7 @@ require('dotenv').config()
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users/users');
-var testAPIRouter = require("./routes/testAPI");
+var todoRouter = require("./routes/todos/todos");
 
 var app = express();
 
@@ -36,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/', indexRouter);
 app.use('/api/users', usersRouter);
-app.use("/api/testAPI", testAPIRouter);
+app.use("/api/todos", todoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
