@@ -6,5 +6,6 @@ var todoController = require('./controller/todoController');
 
 router.get('/', middleware.authenticateToken, todoController.fetchTodos);
 router.post('/', middleware.authenticateToken, todoController.createTodo);
+router.patch('/', middleware.authenticateToken, todoController.updateTodo);
 
 module.exports = router;

@@ -46,21 +46,18 @@ class TodoModal extends React.Component{
 
 class TodoItem extends React.Component{
     render(){
-        const {item} = this.props
+        const {item, editItem} = this.props
 
         return (
             <div className='todo-item'>
-
                 <div className='left'>
                     <Checkbox/>
                     <div className='description'>{item.description}</div>
                 </div>
-
                 <div className='right'>
-                    <EditIcon/>
+                    <EditIcon onClick={editItem}/>
                     <HighlightOffIcon/>
                 </div>
-
             </div>
         )
     }
@@ -103,7 +100,7 @@ export default class TodoListScreen extends React.Component{
         const {token, modalItem} = this.state
         const createUrl = 'http://localhost:9000/api/todos/'
         const response = await fetch(createUrl, {
-            method: 'POST',
+            method: modalItem._id ? 'PATCH' : 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -111,13 +108,30 @@ export default class TodoListScreen extends React.Component{
             body: JSON.stringify(modalItem)
         });
 
-        let newTodoItem = await response.json()
-        const todoList = this.state.todoList.concat(newTodoItem)
+        let todoList = []
+        if( modalItem._id ){
+            todoList = this.state.todoList.map((item) => {
+                if( item._id == modalItem._id ){
+                    return modalItem
+                }
+                return item
+            })
+        }else{
+            let newTodoItem = await response.json()
+            todoList = this.state.todoList.concat(newTodoItem)
+        }
+
         this.setState({showTodoModal: false, todoList})
     }
 
     render(){
-        const todoItems = this.state.todoList.map((item)=><TodoItem key={item._id} item={item}/>)
+        const todoItems = this.state.todoList.map((item)=><TodoItem
+            key={item._id}
+            item={item}
+            editItem={()=>{
+                this.setState({modalItem: item, showTodoModal: true})
+            }}
+        />)
         const {showTodoModal, modalItem} = this.state
         return (
             <Container className='todo-dashboard'>
@@ -188,6 +202,7 @@ export default class TodoListScreen extends React.Component{
                                 className='btn create-btn'
                                 onClick={()=>{
                                     const modalItem = {
+                                        _id: null,
                                         description: '',
                                         isComplete: false,
                                     }

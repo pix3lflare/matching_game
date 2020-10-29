@@ -18,4 +18,10 @@ module.exports = {
         res.send(savedTodo);
     },
 
+    updateTodo: async (req, res) => {
+        const { _id, description, isComplete } = req.body
+        const updateResp = await Todo.updateOne({ _id}, {description, isComplete});
+        res.send(updateResp);
+    },
+
 }
