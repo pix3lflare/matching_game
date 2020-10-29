@@ -245,16 +245,30 @@
                 height: 50px;
                 display: flex;
                 align-items: center;
-                justify-content: flex-end;
+                justify-content: space-between;
                 padding: 0px 15px;
 
                 .btn{
                     position: relative;
                     margin-left: 10px;
                 }
+
+                .create-btn{
+                     background: #06a906;
+                }
+
             }
         }
 
     }
 
+}
+
+/* Modal Styles */
+#form-dialog-title{
+    padding-bottom: 0px;
+}
+
+.modal-field{
+    width: 400px !important;
 }

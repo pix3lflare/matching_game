@@ -20,6 +20,7 @@ var TodoSchema = new mongoose.Schema({
 
     isComplete: {
         type: Boolean,
+        default: false,
     },
 
     timestamp: {type: String, default: now.format('dddd, MMMM Do YYYY, h:mm:ss a')}
