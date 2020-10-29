@@ -10,6 +10,8 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 class TodoItem extends React.Component{
     render(){
+
+      const {item} = this.props
         return (
             <div className='todo-item'>
 
@@ -29,8 +31,30 @@ class TodoItem extends React.Component{
 }
 
 
+
 export default class TodoListScreen extends React.Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOTliYmFiM2EzODhkMmM1NGI5NWQ1MCIsImVtYWlsIjoidGVzdEBtYWlsLmNvbSIsImlhdCI6MTYwMzk4NDI0OSwiZXhwIjoxNjAzOTg3ODQ5fQ.Ce40IIGmy3vIIP2nOFO7iPOkUjwMf2BymH7NKwM6NTk',
+      todoList: [],
+    }
+  }
+  componentDidMount(){ 
+    this.fetchTodoItems()
+  }
+
+  fetchTodoItems = async () => {
+    const fetchUrl = 'http://localhost:9000/api/todos/'
+    const response = await fetch (fetchUrl, {
+      header: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.state.token}`
+      }
+    })
+  }
     render(){
+      const todoItems = this.state.todoList.map((item) =><TodoItem key={item._id} item={item}/>)
         return (
             <Container className='todo-dashboard'>
 
