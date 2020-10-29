@@ -8,16 +8,16 @@ import EditIcon from '@material-ui/icons/Edit';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 
-//Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOTliOWE2NTg4NTlmMGMwMTZmYTlhZiIsImVtYWlsIjoidXNlcjFAdGVzdC5jb20iLCJpYXQiOjE2MDM5ODI3MTgsImV4cCI6MTYwMzk4NjMxOH0.aG5v3dnGTTrg_c6rTyRjj9IwAjyzT8J5-Z7TEWAVVvU
-
 class TodoItem extends React.Component{
     render(){
+        const {item} = this.props
+
         return (
             <div className='todo-item'>
 
                 <div className='left'>
                     <Checkbox/>
-                    <div className='description'>Todo Item</div>
+                    <div className='description'>{item.description}</div>
                 </div>
 
                 <div className='right'>
@@ -32,7 +32,38 @@ class TodoItem extends React.Component{
 
 
 export default class TodoListScreen extends React.Component{
+
+    constructor(props){
+        super(props)
+        this.state = {
+            token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOTliOWE2NTg4NTlmMGMwMTZmYTlhZiIsImVtYWlsIjoidXNlcjFAdGVzdC5jb20iLCJpYXQiOjE2MDM5ODY3MjAsImV4cCI6MTYwNDM0NjcyMH0.dvltXG_vxX_R5xZ4kbl2nv52NrFxwOuQFMfTQirQhgQ',
+            todoList: [],
+        }
+    }
+
+    componentDidMount(){
+        this.fetchTodoItems()
+    }
+
+    fetchTodoItems = async () => {
+        console.log('Fetch Todo Items')
+        const {token} = this.state
+        const fetchUrl = 'http://localhost:9000/api/todos/'
+        const response = await fetch(fetchUrl, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+        });
+
+        let todoList = await response.json()
+        console.log(todoList)
+        this.setState({todoList})
+    }
+
     render(){
+        const todoItems = this.state.todoList.map((item)=><TodoItem key={item._id} item={item}/>)
+
         return (
             <Container className='todo-dashboard'>
 
@@ -76,11 +107,7 @@ export default class TodoListScreen extends React.Component{
                 <div className='list-container'>
 
                     <div className='todo-list'>
-                        <TodoItem/>
-                        <TodoItem/>
-                        <TodoItem/>
-                        <TodoItem/>
-                        <TodoItem/>
+                        {todoItems}
                     </div>
 
                     <div className='control-bar'>
