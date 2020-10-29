@@ -6,6 +6,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import EditIcon from '@material-ui/icons/Edit';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import SearchIcon from '@material-ui/icons/Search';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -197,9 +198,16 @@ export default class TodoListScreen extends React.Component{
 
                   <Toolbar className='tool-bar'>
 
+                    {/* App Title */}
                     <div className='app-title'>
                         <ListAltIcon />
                         <div className='name'>Todo App</div>
+                    </div>
+
+                    {/* Search Bar */}
+                    <div className='search-bar'>
+                        <SearchIcon/>
+                        <input type='text'/>
                     </div>
 
                     {/* Super Nav */}
