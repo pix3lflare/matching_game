@@ -24,4 +24,11 @@ module.exports = {
         res.send(updateResp);
     },
 
+    deleteTodo: async (req, res) => {
+        const { _id} = req.body
+        console.log('DeleteID: ', _id)
+        const deleteResp = await Todo.deleteOne({_id});
+        res.send(deleteResp);
+    },
+
 }

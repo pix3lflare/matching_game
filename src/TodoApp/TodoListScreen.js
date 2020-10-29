@@ -46,7 +46,7 @@ class TodoModal extends React.Component{
 
 class TodoItem extends React.Component{
     render(){
-        const {item, editItem} = this.props
+        const {item, editItem, deleteItem} = this.props
 
         return (
             <div className='todo-item'>
@@ -56,7 +56,7 @@ class TodoItem extends React.Component{
                 </div>
                 <div className='right'>
                     <EditIcon onClick={editItem}/>
-                    <HighlightOffIcon/>
+                    <HighlightOffIcon onClick={deleteItem}/>
                 </div>
             </div>
         )
@@ -124,6 +124,22 @@ export default class TodoListScreen extends React.Component{
         this.setState({showTodoModal: false, todoList})
     }
 
+    deleteItem = async (itemID) => {
+        const {token} = this.state
+        const deleteUrl = 'http://localhost:9000/api/todos/'
+        const response = await fetch(deleteUrl, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({_id:itemID})
+        });
+
+        const todoList = this.state.todoList.filter((item)=>item._id!=itemID)
+        this.setState({todoList})
+    }
+
     render(){
         const todoItems = this.state.todoList.map((item)=><TodoItem
             key={item._id}
@@ -131,6 +147,7 @@ export default class TodoListScreen extends React.Component{
             editItem={()=>{
                 this.setState({modalItem: item, showTodoModal: true})
             }}
+            deleteItem={()=>this.deleteItem(item._id)}
         />)
         const {showTodoModal, modalItem} = this.state
         return (
