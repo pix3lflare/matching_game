@@ -6,6 +6,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import EditIcon from '@material-ui/icons/Edit';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import SearchIcon from '@material-ui/icons/Search';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -46,17 +47,18 @@ class TodoModal extends React.Component{
 
 class TodoItem extends React.Component{
     render(){
-        const {item, editItem} = this.props
+        const {item, editItem, deleteItem, completeItem} = this.props
 
         return (
-            <div className='todo-item'>
+            <div className={item.isComplete ? 'todo-item completed' : 'todo-item'}>
                 <div className='left'>
                     <Checkbox/>
                     <div className='description'>{item.description}</div>
                 </div>
                 <div className='right'>
+                    <div className='complete-btn' onClick={completeItem}>Completed</div>
                     <EditIcon onClick={editItem}/>
-                    <HighlightOffIcon/>
+                    <HighlightOffIcon onClick={deleteItem}/>
                 </div>
             </div>
         )
@@ -124,6 +126,45 @@ export default class TodoListScreen extends React.Component{
         this.setState({showTodoModal: false, todoList})
     }
 
+    deleteItem = async (itemID) => {
+        const {token} = this.state
+        const deleteUrl = 'http://localhost:9000/api/todos/'
+        const response = await fetch(deleteUrl, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({_id:itemID})
+        });
+
+        const todoList = this.state.todoList.filter((item)=>item._id!=itemID)
+        this.setState({todoList})
+    }
+
+    completeItem = async (item) => {
+        const {token} = this.state
+        const updatedItem = Object.assign({}, item, {isComplete: true})
+        const updateUrl = 'http://localhost:9000/api/todos/'
+        const response = await fetch(updateUrl, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(updatedItem)
+        });
+
+        const todoList = this.state.todoList.map((i)=>{
+            if( i._id == updatedItem._id ){
+                return updatedItem
+            }
+
+            return i
+        })
+        this.setState({todoList})
+    }
+
     render(){
         const todoItems = this.state.todoList.map((item)=><TodoItem
             key={item._id}
@@ -131,6 +172,8 @@ export default class TodoListScreen extends React.Component{
             editItem={()=>{
                 this.setState({modalItem: item, showTodoModal: true})
             }}
+            deleteItem={()=>this.deleteItem(item._id)}
+            completeItem={()=>this.completeItem(item)}
         />)
         const {showTodoModal, modalItem} = this.state
         return (
@@ -155,9 +198,16 @@ export default class TodoListScreen extends React.Component{
 
                   <Toolbar className='tool-bar'>
 
+                    {/* App Title */}
                     <div className='app-title'>
                         <ListAltIcon />
                         <div className='name'>Todo App</div>
+                    </div>
+
+                    {/* Search Bar */}
+                    <div className='search-bar'>
+                        <SearchIcon/>
+                        <input type='text'/>
                     </div>
 
                     {/* Super Nav */}
