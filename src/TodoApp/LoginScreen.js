@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Container, Button, TextField } from '@material-ui/core';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 
@@ -58,6 +58,7 @@ export default class LoginScreen extends React.Component {
         const { token } = respJson;
         console.log('Login Successful');
         console.log('Token: ', token);
+        this.props.setAuthToken(token)
       } else {
         console.log('Server-side Validation Failed');
         console.log(respJson);
@@ -68,7 +69,9 @@ export default class LoginScreen extends React.Component {
 
   render() {
     const { email, password, errorFields, loginError } = this.state;
-    return (
+    const {setAuthToken, token} = this.props
+
+    return token ? <Redirect to='/todo-dashboard'/> : (
       <Container className="screen">
         <ListAltIcon />
         <div className="title">Todo App</div>
