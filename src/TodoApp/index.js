@@ -6,6 +6,9 @@ import ForgotPasswordScreen from './ForgotPasswordScreen'
 import PasswordResetScreen from './PasswordResetScreen'
 import TodoListScreen from './TodoListScreen'
 import NestedRouteUI from './NestedRouteUI'
+import { connect } from 'react-redux'
+import { increment, decrement } from '../App.js'
+import { bindActionCreators } from 'redux'
 
 import {
   BrowserRouter as Router,
@@ -27,7 +30,7 @@ class PrivateRoute extends React.Component{
 }
 
 
-export default class TodoApp extends React.Component{
+class TodoApp extends React.Component{
     constructor(props){
         super(props)
         this.state = {
@@ -44,7 +47,7 @@ export default class TodoApp extends React.Component{
         const {token} = this.state
         return (
             <div className='todo-app'>
-
+                <div onClick={()=>this.props.increment()}>Counter: {this.props.counter}</div>
                 <Router>
 
                     <Switch>
@@ -82,3 +85,19 @@ export default class TodoApp extends React.Component{
         )
     }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    counter: state.value,
+    valueList: state.valueList,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    increment,
+}, dispatch)
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoApp)
