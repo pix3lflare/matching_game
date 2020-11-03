@@ -7,7 +7,6 @@ import PasswordResetScreen from './PasswordResetScreen'
 import TodoListScreen from './TodoListScreen'
 import NestedRouteUI from './NestedRouteUI'
 import { connect } from 'react-redux'
-import { increment, decrement } from '../App.js'
 import { bindActionCreators } from 'redux'
 
 import {
@@ -31,25 +30,13 @@ class PrivateRoute extends React.Component{
 
 
 class TodoApp extends React.Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            token: null
-        }
-    }
-
-    setAuthToken = (token) => {
-        console.log('Set Auth Token: ' + token )
-        this.setState({token})
-    }
 
     render(){
-        const {token} = this.state
+        const {token} = this.props
+
         return (
             <div className='todo-app'>
-                <div onClick={()=>this.props.increment()}>Counter: {this.props.counter}</div>
                 <Router>
-
                     <Switch>
 
                         <Route exact path="/">
@@ -57,7 +44,7 @@ class TodoApp extends React.Component{
                         </Route>
 
                         <Route path="/login">
-                            <LoginScreen setAuthToken={this.setAuthToken} token={token}/>
+                            <LoginScreen/>
                         </Route>
 
                         <Route path="/register">
@@ -88,14 +75,11 @@ class TodoApp extends React.Component{
 
 const mapStateToProps = (state) => {
   return {
-    counter: state.value,
-    valueList: state.valueList,
+    token : state.auth.token,
   }
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-    increment,
-}, dispatch)
+const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch)
 
 export default connect(
   mapStateToProps,

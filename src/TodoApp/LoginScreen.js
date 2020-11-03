@@ -2,8 +2,12 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Container, Button, TextField } from '@material-ui/core';
 import ListAltIcon from '@material-ui/icons/ListAlt';
+import { setToken } from '../reducers/AuthSlice.js'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-export default class LoginScreen extends React.Component {
+
+class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -58,7 +62,7 @@ export default class LoginScreen extends React.Component {
         const { token } = respJson;
         console.log('Login Successful');
         console.log('Token: ', token);
-        this.props.setAuthToken(token)
+        this.props.setToken({token})
       } else {
         console.log('Server-side Validation Failed');
         console.log(respJson);
@@ -115,3 +119,18 @@ export default class LoginScreen extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    token: state.auth.token,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    setToken,
+}, dispatch)
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginScreen)

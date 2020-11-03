@@ -7,29 +7,15 @@ import Dashboard from './Dashboard';
 import TodoApp from './TodoApp'
 import { createSlice, configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
+import logger from 'redux-logger'
+import thunk from 'redux-thunk';
+import { applyMiddleware, createStore } from 'redux';
+import rootReducer from './reducers'
 
-
-export const counterSlice = createSlice({
-  name: 'counter',
-  initialState: {
-    valueList: [1, 2, 3, 4, 5],
-    value: 0
-  },
-  reducers: {
-    increment: state => {
-      state.value += 1
-    },
-    decrement: state => {
-      state.value -= 1
-    }
-  }
-})
-
-export const { increment, decrement } = counterSlice.actions
-
-const store = configureStore({
-  reducer: counterSlice.reducer
-})
+const store = createStore(
+  rootReducer,
+  applyMiddleware(logger, thunk)
+)
 
 class App extends React.Component {
   render() {

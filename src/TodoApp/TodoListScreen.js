@@ -13,7 +13,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import {fetchTodoItems} from '../reducers/TodoSlice'
 
 
 class TodoModal extends React.Component{
@@ -67,40 +69,23 @@ class TodoItem extends React.Component{
 }
 
 
-export default class TodoListScreen extends React.Component{
+class TodoListScreen extends React.Component{
 
     constructor(props){
         super(props)
         this.state = {
-            token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmOTliOWE2NTg4NTlmMGMwMTZmYTlhZiIsImVtYWlsIjoidXNlcjFAdGVzdC5jb20iLCJpYXQiOjE2MDM5ODY3MjAsImV4cCI6MTYwNDM0NjcyMH0.dvltXG_vxX_R5xZ4kbl2nv52NrFxwOuQFMfTQirQhgQ',
-            todoList: [],
             showTodoModal:false,
             modalItem: null,
         }
     }
 
     componentDidMount(){
-        this.fetchTodoItems()
-    }
-
-    fetchTodoItems = async () => {
-        console.log('Fetch Todo Items')
-        const {token} = this.state
-        const fetchUrl = 'http://localhost:9000/api/todos/'
-        const response = await fetch(fetchUrl, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-        });
-
-        let todoList = await response.json()
-        console.log(todoList)
-        this.setState({todoList})
+        this.props.fetchTodoItems()
     }
 
     handleSave = async () => {
-        const {token, modalItem} = this.state
+        const {token} = this.props
+        const {modalItem} = this.state
         const createUrl = 'http://localhost:9000/api/todos/'
         const response = await fetch(createUrl, {
             method: modalItem._id ? 'PATCH' : 'POST',
@@ -128,7 +113,7 @@ export default class TodoListScreen extends React.Component{
     }
 
     deleteItem = async (itemID) => {
-        const {token} = this.state
+        const {token} = this.props
         const deleteUrl = 'http://localhost:9000/api/todos/'
         const response = await fetch(deleteUrl, {
             method: 'DELETE',
@@ -144,7 +129,7 @@ export default class TodoListScreen extends React.Component{
     }
 
     completeItem = async (item) => {
-        const {token} = this.state
+        const {token} = this.props
         const updatedItem = Object.assign({}, item, {isComplete: true})
         const updateUrl = 'http://localhost:9000/api/todos/'
         const response = await fetch(updateUrl, {
@@ -167,7 +152,7 @@ export default class TodoListScreen extends React.Component{
     }
 
     render(){
-        const todoItems = this.state.todoList.map((item)=><TodoItem
+        const todoItems = this.props.todoList.map((item)=><TodoItem
             key={item._id}
             item={item}
             editItem={()=>{
@@ -275,3 +260,19 @@ export default class TodoListScreen extends React.Component{
         )
     }
 }
+
+
+const mapStateToProps = (state) => {
+  return {
+    token : state.auth.token,
+    todoList: state.todo.todoList,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({fetchTodoItems}, dispatch)
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoListScreen)
+
