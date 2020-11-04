@@ -76,6 +76,7 @@ class TodoApp extends React.Component{
 const mapStateToProps = (state) => {
   return {
     token : state.auth.token,
+    completedItems: state.todo.completedItems,
   }
 }
 

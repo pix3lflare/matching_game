@@ -10,20 +10,37 @@ import { Provider } from 'react-redux'
 import logger from 'redux-logger'
 import thunk from 'redux-thunk';
 import { applyMiddleware, createStore } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
+import storage from 'redux-persist/lib/storage'
 import rootReducer from './reducers'
 
+
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+
 const store = createStore(
-  rootReducer,
+  persistedReducer,
   applyMiddleware(logger, thunk)
 )
+
+let persistor = persistStore(store)
 
 class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-          <div className="App">
-            <TodoApp/>
-          </div>
+        <PersistGate loading={null} persistor={persistor}>
+           <div className="App">
+             <TodoApp/>
+           </div>
+        </PersistGate>
       </Provider>
     );
   }

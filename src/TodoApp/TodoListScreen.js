@@ -248,7 +248,7 @@ class TodoListScreen extends React.Component{
                         </div>
 
                         <div className='right'>
-                            <Button variant="contained" color="primary" className='btn'>Complete</Button>
+                            <Button variant="contained" color="primary" className='btn'>Complete 123</Button>
                             <Button variant="contained" color="secondary" className='btn'>Delete</Button>
                         </div>
 

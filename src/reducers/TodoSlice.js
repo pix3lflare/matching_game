@@ -22,11 +22,16 @@ export const todoSlice = createSlice({
   name: 'todo',
   initialState: {
     todoList: [],
+    completedItems: [1,2,3],
   },
+
   reducers: {
     setToken: (state, { payload }) => {
-      state.token = payload.token
+       state.token = payload.token
     },
+    clearCompleted: (state) => {
+        state.completedItems = []
+    }
   },
 
   extraReducers: {
