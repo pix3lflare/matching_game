@@ -15,7 +15,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import {fetchTodoItems} from '../reducers/TodoSlice'
+import {fetchTodoItems, saveTodoItem} from '../reducers/TodoSlice'
+import {logout} from '../reducers/AuthSlice'
 
 
 class TodoModal extends React.Component{
@@ -83,35 +84,6 @@ class TodoListScreen extends React.Component{
         this.props.fetchTodoItems()
     }
 
-    handleSave = async () => {
-        const {token} = this.props
-        const {modalItem} = this.state
-        const createUrl = 'http://localhost:9000/api/todos/'
-        const response = await fetch(createUrl, {
-            method: modalItem._id ? 'PATCH' : 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(modalItem)
-        });
-
-        let todoList = []
-        if( modalItem._id ){
-            todoList = this.state.todoList.map((item) => {
-                if( item._id == modalItem._id ){
-                    return modalItem
-                }
-                return item
-            })
-        }else{
-            let newTodoItem = await response.json()
-            todoList = this.state.todoList.concat(newTodoItem)
-        }
-
-        this.setState({showTodoModal: false, todoList})
-    }
-
     deleteItem = async (itemID) => {
         const {token} = this.props
         const deleteUrl = 'http://localhost:9000/api/todos/'
@@ -172,7 +144,10 @@ class TodoListScreen extends React.Component{
                   handleClose={()=>{
                     this.setState({showTodoModal: false})
                   }}
-                  handleSave={this.handleSave}
+                  handleSave={() => {
+                    this.props.saveTodoItem(modalItem)
+                    this.setState({showTodoModal: false})
+                  }}
                   updateItem={(description)=>{
                     const updatedModalItem = Object.assign({}, modalItem, {description})
                     this.setState({modalItem: updatedModalItem})
@@ -210,7 +185,7 @@ class TodoListScreen extends React.Component{
                                 <SettingsIcon/>
                                 <label>Settings</label>
                             </div>
-                            <div className='dd-item'>
+                            <div className='dd-item' onClick={this.props.logout}>
                                 <ExitToAppIcon/>
                                 <label>Logout</label>
                             </div>
@@ -248,7 +223,7 @@ class TodoListScreen extends React.Component{
                         </div>
 
                         <div className='right'>
-                            <Button variant="contained" color="primary" className='btn'>Complete 123</Button>
+                            <Button variant="contained" color="primary" className='btn'>Complete</Button>
                             <Button variant="contained" color="secondary" className='btn'>Delete</Button>
                         </div>
 
@@ -269,7 +244,11 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({fetchTodoItems}, dispatch)
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    fetchTodoItems,
+    saveTodoItem,
+    logout,
+}, dispatch)
 
 export default connect(
   mapStateToProps,

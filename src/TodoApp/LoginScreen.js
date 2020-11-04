@@ -60,8 +60,6 @@ class LoginScreen extends React.Component {
       let respJson = await response.json();
       if (response.status == 200) {
         const { token } = respJson;
-        console.log('Login Successful');
-        console.log('Token: ', token);
         this.props.setToken({token})
       } else {
         console.log('Server-side Validation Failed');
