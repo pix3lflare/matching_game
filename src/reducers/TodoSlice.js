@@ -69,18 +69,56 @@ export const deleteTodoItem = createAsyncThunk(
   }
 );
 
+
+export const completeItem = createAsyncThunk(
+  'completeItem',
+  async (item, thunkAPI) => {
+    const token = thunkAPI.getState().auth.token;
+    const updatedItem = Object.assign({}, item, { isComplete: true });
+    const updateUrl = 'http://localhost:9000/api/todos/';
+    const response = await fetch(updateUrl, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(updatedItem),
+    });
+  
+    const todoList = thunkAPI
+      .getState()
+      .todo.todoList.map((i) => {
+      if (i._id == updatedItem._id) {
+        return updatedItem;
+      }
+  
+      return i;
+    });
+
+    return todoList;
+
+  }
+) 
+
+
+
+
 //
 export const todoSlice = createSlice({
   name: 'todo',
   initialState: {
     todoList: [],
     showTodoModal: false,
+    modalItem: null,
   },
 
   reducers: {
     setTodoModal: (state, action) => {
       state.showTodoModal = action.payload;
     },
+    setModalItem: (state, action) => {
+      state.modalItem = action.payload;
+    }
   },
 
   extraReducers: {
@@ -93,7 +131,10 @@ export const todoSlice = createSlice({
     [deleteTodoItem.fulfilled]: (state, action) => {
       state.todoList = action.payload;
     },
+    [completeItem.fulfilled]: (state, action) => {
+      state.todoList = action.payload;
+    }
   },
 });
 
-export const { setTodoModal } = todoSlice.actions;
+export const { setTodoModal, setModalItem } = todoSlice.actions;

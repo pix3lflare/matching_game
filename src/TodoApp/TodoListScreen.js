@@ -28,6 +28,8 @@ import {
   saveTodoItem,
   deleteTodoItem,
   setTodoModal,
+  setModalItem,
+  completeItem,
 } from '../reducers/TodoSlice';
 import { logout } from '../reducers/AuthSlice';
 
@@ -86,55 +88,26 @@ class TodoItem extends React.Component {
 }
 
 class TodoListScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modalItem: null,
-    };
-  }
 
   componentDidMount() {
     this.props.fetchTodoItems();
   }
 
-  completeItem = async (item) => {
-    const { token } = this.props;
-    const updatedItem = Object.assign({}, item, { isComplete: true });
-    const updateUrl = 'http://localhost:9000/api/todos/';
-    const response = await fetch(updateUrl, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(updatedItem),
-    });
-
-    const todoList = this.state.todoList.map((i) => {
-      if (i._id == updatedItem._id) {
-        return updatedItem;
-      }
-
-      return i;
-    });
-    this.setState({ todoList });
-  };
-
   render() {
+    const { showTodoModal, setModalItem, modalItem, setTodoModal } = this.props;
     const todoItems = this.props.todoList.map((item) => (
       <TodoItem
         key={item._id}
         item={item}
         editItem={() => {
-          this.props.setTodoModal(true);
-          this.setState({ modalItem: item });
+          setModalItem(item);
+          setTodoModal(true);
         }}
         deleteItem={() => this.props.deleteTodoItem(item._id)}
-        completeItem={() => this.completeItem(item)}
+        completeItem={() => this.props.completeItem(item)}
       />
     ));
-    const { modalItem } = this.state;
-    const { showTodoModal } = this.props;
+
     return (
       <Container className="todo-dashboard">
         {/*  Modals */}
@@ -152,7 +125,7 @@ class TodoListScreen extends React.Component {
             const updatedModalItem = Object.assign({}, modalItem, {
               description,
             });
-            this.setState({ modalItem: updatedModalItem });
+            setModalItem(updatedModalItem)
           }}
         />
 
@@ -209,8 +182,8 @@ class TodoListScreen extends React.Component {
                     description: '',
                     isComplete: false,
                   };
-                  this.props.setTodoModal(true);
-                  this.setState({ modalItem });
+                  setTodoModal(true);
+                  setModalItem(modalItem);
                 }}
               >
                 New Todo
@@ -237,6 +210,7 @@ const mapStateToProps = (state) => {
     token: state.auth.token,
     todoList: state.todo.todoList,
     showTodoModal: state.todo.showTodoModal,
+    modalItem: state.todo.modalItem,
   };
 };
 
@@ -248,6 +222,8 @@ const mapDispatchToProps = (dispatch) =>
       deleteTodoItem,
       logout,
       setTodoModal,
+      setModalItem,
+      completeItem,
     },
     dispatch
   );
