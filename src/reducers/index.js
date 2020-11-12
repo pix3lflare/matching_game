@@ -6,5 +6,4 @@ import { todoSlice } from './TodoSlice.js'
 export default combineReducers({
   auth: authSlice.reducer,
   todo: todoSlice.reducer,
-
 })

@@ -4,6 +4,8 @@ import './dashboard.scss';
 import './todo_app.scss';
 import MatchingGame from './MatchingGame';
 import Dashboard from './Dashboard';
+import UserDashboard from './Dashboard/UserDashboard';
+import MessageDashboard from './Dashboard/MessageDashboard';
 import TodoApp from './TodoApp'
 import { createSlice, configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
@@ -38,7 +40,10 @@ class App extends React.Component {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
            <div className="App">
-             <TodoApp/>
+
+             {/*<TodoApp/>*/}
+             <MessageDashboard/>
+
            </div>
         </PersistGate>
       </Provider>

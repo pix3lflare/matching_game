@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import {ThemeContext} from './theme_context'
+
 
 export default class NavBtn extends Component {
-  static contextType = ThemeContext;
 
   render() {
     const icon = this.props.icon
     const theme = this.context.theme
 
     return (
-      <div className={`nav-btn ${theme}`} onClick={this.props.onClick}>
+      <div className={`nav-btn`} onClick={this.props.onClick}>
         {icon}
         <label>{this.props.label}</label>
       </div>

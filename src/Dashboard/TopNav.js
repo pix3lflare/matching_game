@@ -8,9 +8,8 @@ export default class TopNav extends Component {
   render() {
     const {theme} = this.context
     return (
-      <div className={`top-nav ${theme}`}>
-        <div className="name">Dashboard</div>
-        <ThemeSelector theme={theme}/>
+      <div className='top-nav'>
+        Top Nav
       </div>
     );
   }

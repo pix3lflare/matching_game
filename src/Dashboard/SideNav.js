@@ -3,26 +3,11 @@ import NavBtn from './NavBtn'
 import {ThemeContext} from './theme_context'
 
 export default class SideNav extends Component {
-    static contextType = ThemeContext;
-
     render() {
-        const theme=this.context.theme
-
         return (
-            <div className={`side-nav ${theme}`}>
-
-                <NavBtn
-                    icon={<i class="fas fa-user"></i>}
-                    label='Profile'
-                    onClick={()=>{
-                        fetch("http://localhost:9000/testAPI/")
-                        .then(res => res.text())
-                        .then(res => {
-                            console.log('Response')
-                            console.log(res)
-                        });
-                    }}
-                />
+            <div className={`side-nav`}>
+                    Side Nav
+                {/*
 
                 <NavBtn
                     icon={<i class="fas fa-users"></i>}
@@ -43,7 +28,7 @@ export default class SideNav extends Component {
                     icon={<i class="fas fa-cog"></i>}
                     label='Settings'
                 />
-
+                */}
             </div>
         )
     }
