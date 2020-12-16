@@ -1,1 +1,1 @@
-/home/ec2-user/.nvm/versions/node/v15.4.0/bin/npm install /home/ec2-user
+npm install /home/ec2-user
