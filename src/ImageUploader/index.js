@@ -39,7 +39,7 @@ export default class ImageUploader extends React.Component{
     render(){
         return (
             <div>
-                <h1>Image Uploader</h1>
+                <h1>Image Uploader 123</h1>
                 <input type='file' onChange={this.onFileChange}/>
                 <img src={this.state.fileUrl}/>
                 <button onClick={this.onFileUpload}>
