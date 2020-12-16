@@ -5,3 +5,5 @@ files:
     destination: /home/ec2-user
 permissions:
 hooks:
+  AfterInstall:
+    - location: /home/ec2-user/scripts/ec2_init.sh
