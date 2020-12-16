@@ -6,8 +6,33 @@ const {
   comparePassword,
   createJwtToken,
 } = require('./authHelper');
+var AWS = require("aws-sdk");
 
 module.exports = {
+  uploadImage: async (req, res) => {
+
+    let s3 = new AWS.S3({
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    })
+    let bucketName = 'afi-website-bucket'
+    let keyName = 's3_test_9.jpg'//req.files.imgFile2.name
+
+    var objectParams = {
+        Bucket: bucketName,
+        Key: keyName,
+        Body: req.files.imgFile.data,
+        ACL: 'public-read'
+    };
+
+    var uploadPromise = await s3.putObject(objectParams).promise();
+
+    res.status(200).json({
+      message: 'Upload Complete',
+      url: `https://${bucketName}.s3.amazonaws.com/${keyName}`
+    });
+  },
+
   register: async (req, res) => {
     try {
       let newUser = await createUser(req.body);

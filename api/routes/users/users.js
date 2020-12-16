@@ -9,4 +9,5 @@ router.get('/', function (req, res, next) {
 
 router.post('/register', userController.register);
 router.post('/login', userController.login);
+router.post('/upload-image', userController.uploadImage);
 module.exports = router;

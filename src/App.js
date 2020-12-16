@@ -7,6 +7,7 @@ import Dashboard from './Dashboard';
 import UserDashboard from './Dashboard/UserDashboard';
 import MessageDashboard from './Dashboard/MessageDashboard';
 import TodoApp from './TodoApp'
+import ImageUploader from './ImageUploader'
 import { createSlice, configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import logger from 'redux-logger'
@@ -38,14 +39,7 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-           <div className="App">
-
-             {/*<TodoApp/>*/}
-             <MessageDashboard/>
-
-           </div>
-        </PersistGate>
+        <ImageUploader/>
       </Provider>
     );
   }
