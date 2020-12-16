@@ -7,4 +7,4 @@ permissions:
 hooks:
   AfterInstall:
     - location: scripts/ec2_init.sh
-      runas: ec2-user
+      runas: root
